@@ -1,8 +1,8 @@
-function vocData = loadMouseData(files,parameters)
+function vocData = loadMouseData(files,isSoloFile,parameters)
 
     addpath('./utilities');
 
-    if nargin < 2 
+    if nargin < 3
         parameters = [];
     end
     parameters = setRunParameters(parameters);
@@ -58,10 +58,13 @@ function vocData = loadMouseData(files,parameters)
     bandwidths = zeros(totalNumberVocalizations,1);
     durations = zeros(totalNumberVocalizations,1);
     normalizedVocs = cell(totalNumberVocalizations,1);
+    isSolo = false(totalNumberVocalizations,1);
     
     count = 1;   
     for i=1:L
-                
+         
+        fprintf(1,'Loading Vocalizations from File #%3i out of %3i\n',i,L);
+        
         for j=1:lengths(i)
                        
             for k=1:length(data{i}(j).vocs);
@@ -75,12 +78,13 @@ function vocData = loadMouseData(files,parameters)
                 durations(count) = max(times{count}) - min(times{count});
                 bandwidths(count) = max(vocs{count}) - min(vocs{count});
                 meanValues(count) = trapz(times{count},vocs{count})/durations(count);
+                isSolo(count) = isSoloFile(i);
                 
                 idx = find([1 diff(times{count})]~=0);
                 x = vocs{count}(idx) - meanValues(count);
                 t = times{count}(idx);
                 a = fit(t',x','linearinterp');
-                normalizedVocs{count} = a(linspace(t(1),t(end),numPoints));
+                normalizedVocs{count} = a(linspace(t(1),t(end),numPoints))';
                 
                 count = count + 1;
             end
@@ -99,8 +103,13 @@ function vocData = loadMouseData(files,parameters)
     vocData.durations = durations;
     vocData.bandwidths = bandwidths;
     vocData.meanValues = meanValues;
-    vocData.normalizedVocs = normalizedVocs;
+    vocData.normalizedVocs = cell2mat(normalizedVocs);
     vocData.numPoints = numPoints;
+    vocData.isSolo = isSolo;
+    
+    
+    
+    
     
     
     
