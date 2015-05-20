@@ -50,8 +50,8 @@ function outputStats = makeOutputPlots(vocData,parameters)
     %     drawnow
     
     
-    isSolo = parameters.isSolo;
-    numIndividuals = max(parameters.individualNumbers);
+    isSolo = vocData.isSolo;
+    numIndividuals = max(vocData.individualNumbers);
     outputStats.numIndividuals = numIndividuals;
     
     individualUrineDensities = zeros(numPoints,numPoints,numIndividuals);
@@ -60,14 +60,14 @@ function outputStats = makeOutputPlots(vocData,parameters)
     numFemaleCalls = zeros(numIndividuals,1);
     for i=1:numIndividuals
         
-        temp = yData(isSolo & parameters.individualNumbers == i,:);
+        temp = yData(isSolo & vocData.individualNumbers == i,:);
         numUrineCalls(i) = length(temp(:,1));
         if ~isempty(temp)
             [~,individualUrineDensities(:,:,i)] = ...
                 findPointDensity(temp,sigma,numPoints,[-maxVal maxVal]);
         end
         
-        temp = yData(~isSolo & parameters.individualNumbers == i,:);
+        temp = yData(~isSolo & vocData.individualNumbers == i,:);
         numFemaleCalls(i) = length(temp(:,1));
         if ~isempty(temp)
             [~,individualFemaleDensities(:,:,i)] = ...
