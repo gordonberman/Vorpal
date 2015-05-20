@@ -119,7 +119,7 @@ function outputStats = makeOutputPlots(vocData,parameters)
     
     B = bwboundaries(density > parameters.minDensity);
     
-    a = max(max(outputStats.median_female_density(:)),max(outputStats.median_male_density(:)));
+    a = max(max(outputStats.median_female_density(:)),max(outputStats.mean_urine_density(:)));
     maxDensity = round(a*.8/5e-5)*5e-5;
     
     figure
