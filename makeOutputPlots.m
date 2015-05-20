@@ -207,8 +207,8 @@ function outputStats = makeOutputPlots(vocData,parameters)
             plot(xx(BB{1}(:,2)),xx(BB{1}(:,1)),'k-','linewidth',2)
         end
         
-        y = peakPoints(i,1);
-        x = peakPoints(i,2);
+        x = peakPoints(i,1);
+        y = peakPoints(i,2);
         text(x,y,num2str(i),...
             'backgroundcolor','k','fontweight','bold','color','w');
     end

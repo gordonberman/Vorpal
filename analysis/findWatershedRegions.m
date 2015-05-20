@@ -48,7 +48,7 @@ function watershedRegions = findWatershedRegions(yData,watershedMap,xx,peakPoint
     
     %disambiguate points on the boundary
     idx = watershedRegions == 0;
-    peakPoints = findPeakPoints(watershedMap,density,xx);
+    %peakPoints = findPeakPoints(watershedMap,density,xx);
     
     D = findListDistances(yData(idx,:),peakPoints);
     [~,maxIdx] = max(D,[],2);
