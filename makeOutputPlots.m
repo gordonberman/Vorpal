@@ -124,7 +124,7 @@ function outputStats = makeOutputPlots(vocData,parameters)
     
     figure
     subplot(1,3,1)
-    imagesc(xx,xx,outputStats.median_urine_density)
+    imagesc(xx,xx,outputStats.mean_urine_density)
     axis equal tight off xy
     colormap(cc)
     caxis([0 maxDensity]);
@@ -136,7 +136,7 @@ function outputStats = makeOutputPlots(vocData,parameters)
     freezeColors
     
     subplot(1,3,2)
-    imagesc(xx,xx, outputStats.median_female_density)
+    imagesc(xx,xx, outputStats.mean_female_density)
     axis equal tight off xy
     colormap(cc)
     caxis([0 maxDensity]);
@@ -148,7 +148,7 @@ function outputStats = makeOutputPlots(vocData,parameters)
     freezeColors
     
     subplot(1,3,3)
-    imagesc(xx,xx, outputStats.median_female_density - outputStats.median_urine_density)
+    imagesc(xx,xx, outputStats.mean_female_density - outputStats.mean_urine_density)
     axis equal tight off xy
     colormap(cc2)
     caxis([-maxDensity maxDensity]);
@@ -159,7 +159,7 @@ function outputStats = makeOutputPlots(vocData,parameters)
         for i=1:max(regions(:))
             BB = bwboundaries(regions == i);
             if ~isempty(BB)
-               plot(xx(BB{1}(:,2)),xx(BB{1}(:,1)),'k--','linewidth',2) 
+               plot(xx(BB{1}(:,2)),xx(BB{1}(:,1)),'k-','linewidth',2) 
             end
         end
     end
@@ -215,7 +215,7 @@ function outputStats = makeOutputPlots(vocData,parameters)
     drawnow
 
         
-    watershedRegions = findWatershedRegions(yData,LL,xx);
+    watershedRegions = findWatershedRegions(yData,LL,xx,peakPoints);
     
     bins = parameters.template_bins;
     yrange = parameters.template_yaxis;

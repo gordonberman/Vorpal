@@ -1,4 +1,4 @@
-function watershedRegions = findWatershedRegions(yData,watershedMap,xx)
+function watershedRegions = findWatershedRegions(yData,watershedMap,xx,peakPoints)
 
     addpath('../utilities/');
     
