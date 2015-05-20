@@ -1,4 +1,4 @@
-function plotTemplateHistograms(vocData,watershedRegions,bins,yrange,numPerFig)
+function plotTemplateHistograms(vocData,watershedRegions,bins,yrange,templatePlotDimensions,colorAxis)
     %makes template histogram plot
  
     
@@ -33,8 +33,8 @@ function plotTemplateHistograms(vocData,watershedRegions,bins,yrange,numPerFig)
     numPoints = length(templates{idx}(1,:));
         
     
-    if nargin < 5 || isempty(numPerFig)
-        numPerFig = 25;
+    if nargin < 5 || isempty(templatePlotDimensions)
+        templatePlotDimensions = [5 5];
     end
     
     
@@ -42,8 +42,10 @@ function plotTemplateHistograms(vocData,watershedRegions,bins,yrange,numPerFig)
     for i=1:numFigs
         
         num = min(numPerFig,N-numPerFig*(i-1));
-        M = ceil(sqrt(num));
-        L = ceil(num/M);
+        %M = ceil(sqrt(num));
+        %L = ceil(num/M);
+        M = templatePlotDimensions(1);
+        L = templatePlotDimensions(2);
         
         figure(i)
         clf
@@ -69,7 +71,7 @@ function plotTemplateHistograms(vocData,watershedRegions,bins,yrange,numPerFig)
                 yy = linspace(0,1,numPoints);
                 
                 pcolor(yy,xx,Z');
-                caxis([0 .1])
+                caxis(colorAxis)
                 shading flat
                 hold on
                 

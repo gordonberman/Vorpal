@@ -120,17 +120,11 @@ function parameters = setRunParameters(parameters)
      %template plot caxis
      template_caxis = [0 .05];
      
-     %template bins
-     template_bins = 50;
-     
      %template plot y axis
-     template_yaxis = [-20 20];
+     template_yaxis = [-4 4];
     
-     %number of points in each dimension of density matrix
-     numPoints = 201;
+     %number of points in each dimension of density 
     
-     %statistical significance p-Value threshold
-     sigAlpha = .05;
     
     
     
@@ -305,19 +299,7 @@ function parameters = setRunParameters(parameters)
         parameters.template_yaxis = template_yaxis;
     end
     
-    
-    if ~isfield(parameters,'numPoints') || isempty(parameters.numPoints)
-        parameters.numPoints = numPoints;
-    end
+
     
     
-    if ~isfield(parameters,'sigAlpha') || isempty(parameters.sigAlpha)
-        parameters.sigAlpha = sigAlpha;
-    end
-    
-    
-    if ~isfield(parameters,'template_bins') || isempty(parameters.template_bins)
-        parameters.template_bins = template_bins;
-    end
-    
-    
+   
