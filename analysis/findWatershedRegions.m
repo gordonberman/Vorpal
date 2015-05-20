@@ -1,6 +1,5 @@
 function watershedRegions = findWatershedRegions(yData,watershedMap,xx,peakPoints)
 
-    addpath('../utilities/');
     
     %     if nargin < 2 || isempty(sigma)
     %         sigma = 1;
