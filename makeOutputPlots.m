@@ -12,15 +12,14 @@ function outputStats = makeOutputPlots(vocData,parameters)
     load('saved_colormaps.mat');
     
     if nargin < 2 || isempty(parameters)
-        parameters = vocData.parameters;
-        parameters = setRunParameters(parameters);
+        parameters = setRunParameters([]);
     else
-        p = vocData.parameters;
-        a = fieldnames(parameters);
-        for i=1:length(a)
-            p.(a{i}) = parameters.(a{i});
-        end
-        parameters = setRunParameters(p);
+        %         p = vocData.parameters;
+        %         a = fieldnames(parameters);
+        %         for i=1:length(a)
+        %             p.(a{i}) = parameters.(a{i});
+        %         end
+        parameters = setRunParameters(parameters);
     end
     
     
