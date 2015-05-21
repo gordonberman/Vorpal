@@ -11,7 +11,8 @@ function plotTemplateHistograms(vocData,watershedRegions,bins,yrange,templatePlo
     %numPerFig -> number of histograms per figure (default = 25)
 
     
-    addpath('../utilities/');
+    %addpath('../utilities/');
+    load('saved_colormaps');
     
     N = max(watershedRegions);
     templates = cell(N,1);
@@ -37,7 +38,7 @@ function plotTemplateHistograms(vocData,watershedRegions,bins,yrange,templatePlo
         templatePlotDimensions = [5 5];
     end
     
-    
+    numPerFig = prod(templatePlotDimensions);
     numFigs = ceil(N/numPerFig);
     for i=1:numFigs
         
@@ -47,7 +48,7 @@ function plotTemplateHistograms(vocData,watershedRegions,bins,yrange,templatePlo
         M = templatePlotDimensions(1);
         L = templatePlotDimensions(2);
         
-        figure(i)
+        figure
         clf
         
         for j=1:num
@@ -86,6 +87,7 @@ function plotTemplateHistograms(vocData,watershedRegions,bins,yrange,templatePlo
                 
                 axis off
                 qq = axis;
+                colormap(cc)
                 plot([qq(1) qq(1) qq(2) qq(2) qq(1)],[qq(3) qq(4) qq(4) qq(3) qq(3)],'k-','linewidth',2)
                 axis([qq(1)-.005 qq(2)+.005 qq(3)-.1 qq(4)+.1])
                 

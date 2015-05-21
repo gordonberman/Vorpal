@@ -20,7 +20,7 @@ function D = find_distance_matrix(vocalizations,parameters)
         temp = zeros(1,N);
         a = vocalizations(i,:);
         
-        for j=(i+1):N
+        parfor j=(i+1):N
             if ~isempty(dtw_window)
                 temp(j) = dtw_c(a,vocalizations(j,:),dtw_window);
             else

@@ -207,10 +207,12 @@ function outputStats = makeOutputPlots(vocData,parameters)
             plot(xx(BB{1}(:,2)),xx(BB{1}(:,1)),'k-','linewidth',2)
         end
         
-        x = peakPoints(i,1);
-        y = peakPoints(i,2);
+        [ii,jj] = find(idx);
+        x = median(xx(jj));
+        y = median(xx(ii));
         text(x,y,num2str(i),...
             'backgroundcolor','k','fontweight','bold','color','w');
+        
     end
     drawnow
 
@@ -222,7 +224,7 @@ function outputStats = makeOutputPlots(vocData,parameters)
     templatePlotDimensions = parameters.templatePlotDimensions;
     colorAxis = parameters.template_caxis;
       
-    plotTemplateHistograms(vocData,watershedRegions,bins,...
+    plotTemplateHistograms(vocData.normalizedVocs,watershedRegions,bins,...
         yrange,templatePlotDimensions,colorAxis);
     
     

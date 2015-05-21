@@ -118,7 +118,7 @@ function parameters = setRunParameters(parameters)
      minDensity = 1e-7;
      
      %template plot caxis
-     template_caxis = [0 .05];
+     template_caxis = [0 .1];
      
      %template bins
      template_bins = 50;
