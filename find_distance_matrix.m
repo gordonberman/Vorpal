@@ -17,6 +17,10 @@ function D = find_distance_matrix(vocalizations,parameters)
     D = zeros(N);
     for i=1:N
         
+        if mod(i,100) == 0
+            fprintf(1,'Data Point #%5i out of %5i\n',i,N);
+        end
+        
         temp = zeros(1,N);
         a = vocalizations(i,:);
         
