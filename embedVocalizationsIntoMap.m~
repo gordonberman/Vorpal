@@ -1,0 +1,31 @@
+function [zValues,inConvHull,zGuesses,zCosts] = ...
+       embedVocalizationsIntoMap(vocalizations,yData,signalData,parameters)
+            
+
+    addpath('utilities/');
+    addpath('t_sne/');
+    
+    
+    if nargin < 4 
+        parameters = [];
+    end
+    parameters = setRunParameters(parameters);
+    
+    N = length(vocalizations(:,1));
+    M = length(yData(:,1));
+    
+    D = zeros(N,M);
+    for i=1:N
+        a = s
+    end
+    
+    sigmaTolerance = parameters.sigmaTolerance;
+    maxNeighbors = parameters.maxNeighbors;
+    perplexity = parameters.perplexity;
+    
+    [zValues,zCosts,zGuesses,inConvHull,~,~] = ...
+        findTDistributedProjections_fmin_D(D,yData,perplexity,...
+        maxNeighbors,sigmaTolerance);
+    
+    
+            
