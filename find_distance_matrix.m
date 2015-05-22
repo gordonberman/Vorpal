@@ -32,7 +32,10 @@ function D = find_distance_matrix(vocalizations,parameters)
             end
         end
         
-        D(i,:) = temp;
+        D(i,i+1:N) = temp(i+1:N);
+        D(i+1:N,i) = temp(i+1:N);
         
     end
+    
+
     
