@@ -31,7 +31,7 @@ function [zValues,zCosts,zGuesses,inConvHull,meanMax,exitFlags] = ...
     parfor i=1:N
         
         if mod(i,readout) == 0
-            fprintf(1,'\t Data Point #%6i out of %6i\n',i,N);
+            fprintf(1,'\t Vocalization #%6i out of %6i\n',i,N);
         end
         
         [~,p] = returnCorrectSigma_sparse(D(i,:),perplexity,sigmaTolerance,maxNeighbors);
