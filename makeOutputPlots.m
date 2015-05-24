@@ -120,7 +120,7 @@ function outputStats = makeOutputPlots(vocData,parameters)
     B = bwboundaries(density > parameters.minDensity);
     
     a = max(max(outputStats.median_female_density(:)),max(outputStats.mean_urine_density(:)));
-    maxDensity = round(a*.8/5e-5)*5e-5;
+    maxDensity = round(a*.75/5e-5)*5e-5;
     
     figure
     subplot(1,3,1)
@@ -128,7 +128,6 @@ function outputStats = makeOutputPlots(vocData,parameters)
     axis equal tight off xy
     colormap(cc)
     caxis([0 maxDensity]);
-    colorbar
     hold on
     plot(xx(B{1}(:,2)),xx(B{1}(:,1)),'k-','linewidth',3)
     set(gca,'fontsize',14,'fontweight','bold')
@@ -140,7 +139,6 @@ function outputStats = makeOutputPlots(vocData,parameters)
     axis equal tight off xy
     colormap(cc)
     caxis([0 maxDensity]);
-    colorbar
     hold on
     plot(xx(B{1}(:,2)),xx(B{1}(:,1)),'k-','linewidth',3)
     set(gca,'fontsize',14,'fontweight','bold')
@@ -168,6 +166,18 @@ function outputStats = makeOutputPlots(vocData,parameters)
     freezeColors
     drawnow
    
+    
+    figure
+    imagesc(xx,xx,-log10(1 - (1 - rankSumPValues).^numComparisons));
+    axis equal tight off xy
+    hold on
+    plot(xx(B{1}(:,2)),xx(B{1}(:,1)),'k-','linewidth',3)
+    colorbar
+    set(gca,'fontsize',14,'fontweight','bold');
+    title('-log_{10} Effective p-Value','fontsize',16,'fontweight','bold');
+    colormap(cc)
+    caxis([0 3]);
+    
     
     fprintf('Finding Watershed Regions\n');
     
@@ -224,7 +234,8 @@ function outputStats = makeOutputPlots(vocData,parameters)
     templatePlotDimensions = parameters.templatePlotDimensions;
     colorAxis = parameters.template_caxis;
       
-    plotTemplateHistograms(vocData.normalizedVocs,watershedRegions,bins,...
+    a = vocData.inTrainingSet;
+    plotTemplateHistograms(vocData.normalizedVocs(a,:),watershedRegions(a),bins,...
         yrange,templatePlotDimensions,colorAxis);
     
     
