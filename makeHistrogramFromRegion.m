@@ -32,7 +32,7 @@ function [Z,x,y,points] = makeHistrogramFromRegion(vocData,plotOutputData,mapDat
     
     
     [x(1),y(1),button] = ginput(1);
-    plot(x(1),y(1),'mo','markerfacecolor','m')
+    plot(x(1),y(1),'ko','markerfacecolor','m')
     count = 2;
     while ~isempty(button)   
         
@@ -52,7 +52,7 @@ function [Z,x,y,points] = makeHistrogramFromRegion(vocData,plotOutputData,mapDat
             hold on
             title('Select Bounding Points (press enter if finished)',...
                 'fontsize',16,'fontweight','bold')
-            plot(x(1:count-1),y(1:count-1),'mo-',...
+            plot(x(1:count-1),y(1:count-1),'ko-',...
                 'markerfacecolor','m','linewidth',1)
             colormap(cm)
             caxis(ca)
@@ -68,8 +68,8 @@ function [Z,x,y,points] = makeHistrogramFromRegion(vocData,plotOutputData,mapDat
     imagesc(xx,xx,mapData)
     axis equal tight off xy
     hold on
-    plot(x(1:count-1),y(1:count-1),'mo-','markerfacecolor','m','linewidth',1)
-    fill(x,y,'c','facealpha',.5,'edgealpha',0)
+    plot(x,y,'ko-','markerfacecolor','m','linewidth',1)
+    fill(x,y,'g','facealpha',.5,'edgealpha',0)
     colormap(cm)
     caxis(ca)
     
@@ -98,6 +98,9 @@ function [Z,x,y,points] = makeHistrogramFromRegion(vocData,plotOutputData,mapDat
     shading flat
     colormap(cc);
     
-
+    set(gca,'fontsize',14,'fontweight','bold')
+    xlabel('Normalized Time Within Call','fontsize',16,'fontweight','bold')
+    ylabel('Normalized Frequency (kHz)','fontsize',16,'fontweight','bold')
+    colorbar
     
     
