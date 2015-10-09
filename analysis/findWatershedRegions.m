@@ -50,8 +50,8 @@ function watershedRegions = findWatershedRegions(yData,watershedMap,xx,peakPoint
     %peakPoints = findPeakPoints(watershedMap,density,xx);
     
     D = findListDistances(yData(idx,:),peakPoints);
-    [~,maxIdx] = max(D,[],2);
-    watershedRegions(idx) = maxIdx;
+    [~,minIdx] = min(D,[],2);
+    watershedRegions(idx) = minIdx;
     
   
     %make region plot (if toggled on)
