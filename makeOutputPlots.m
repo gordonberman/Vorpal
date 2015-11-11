@@ -78,10 +78,10 @@ function outputStats = makeOutputPlots(vocData,parameters)
         
     end
     
-    outputStats.individualUrineDensities = individualUrineDensities;
-    outputStats.individualFemaleDensities = individualFemaleDensities;
-    outputStats.numUrineCalls = numUrineCalls;
-    outputStats.numFemaleCalls = numFemaleCalls;
+    outputStats.individualUrineDensities = individualUrineDensities(:,:,numUrineCalls>0);
+    outputStats.individualFemaleDensities = individualFemaleDensities(:,:,numFemaleCalls>0);
+    outputStats.numUrineCalls = numUrineCalls(numUrineCalls>0);
+    outputStats.numFemaleCalls = numFemaleCalls(numFemaleCalls>0);
     
     
     outputStats.median_female_density = median(individualFemaleDensities,3);
