@@ -93,8 +93,7 @@ function vocData = loadMouseData(files,isSoloFile,parameters)
                 idx = find([1 diff(times{count})]~=0);
                 x = vocs{count}(idx) - meanValues(count);
                 t = times{count}(idx);
-                a = fit(t',x','linearinterp');
-                normalizedVocs{count} = a(linspace(t(1),t(end),numPoints))';
+                normalizedVocs{count} = interp1(t,x,linspace(t(1),t(end),numPoints));
                 
                 count = count + 1;
             end
