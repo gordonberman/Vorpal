@@ -1,9 +1,11 @@
 function vocData = loadMouseData(files,isSoloFile,parameters)
-%loads vocalization data and creates a "vocData" data structure
+% loadMouseData: loads vocalization data and creates a "vocData" data structure
+% 
+% form:  vocData = loadMouseData(files,isSoloFile,parameters)
 %
-%Inputs:
+% Inputs:
 %   files -> cell array (L x 1) of .mat files containing vocalization data
-%   isSoloFile -> L x 1 binary array, true if no female present, true
+%   isSoloFile -> L x 1 binary array, true if no female present, false
 %                   otherwise
 %   parameters -> struct containing non-default parameter values
 %
