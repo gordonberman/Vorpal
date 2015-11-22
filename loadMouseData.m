@@ -9,6 +9,17 @@ function vocData = loadMouseData(files,isSoloFile,parameters)
 %                   otherwise
 %   parameters -> struct containing non-default parameter values
 %
+% Output:
+%  vocData -> vocalization database 
+%
+% input file format:    a .mat file with a cell array of experiments,
+%                       each element has two fields, .exptName, which is a string
+%                       and .vocs, which is a cell array, each element of
+%                       which is a 3 row, N col matrix, where row 1 is time
+%                       in the frequency contour, row 2 is frequency and
+%                       row 3 is amplitude.  Frequency contours like this
+%                       are produced by Ax (https://github.com/JaneliaSciComp/Ax)
+% 
 % (C) Gordon J. Berman, 2015
 %     Princeton University
 
@@ -36,13 +47,12 @@ function vocData = loadMouseData(files,isSoloFile,parameters)
         f = fieldnames(a);
         data{i} = a.(f{1});
         lengths(i) = length(data{i});
-        
 
         experimentNames{i} = cell(lengths(i),1);
         individualNames{i} = cell(lengths(i),1);
         tempVocs = zeros(lengths(i),1);
         
-        for j=1:lengths(i)          
+        for j=1:lengths(i)    
             experimentNames{i}{j} = data{i}(j).exptName;
             idx = find(experimentNames{i}{j} == '_');
             individualNames{i}{j} = experimentNames{i}{j}(1:idx(1)-1);        
@@ -80,6 +90,7 @@ function vocData = loadMouseData(files,isSoloFile,parameters)
         for j=1:lengths(i)
                        
             for k=1:length(data{i}(j).vocs);
+                
                 times{count} = data{i}(j).vocs{k}(1,:);
                 vocs{count} = data{i}(j).vocs{k}(2,:);
                 amps{count} = data{i}(j).vocs{k}(3,:);
@@ -90,11 +101,12 @@ function vocData = loadMouseData(files,isSoloFile,parameters)
                 durations(count) = max(times{count}) - min(times{count});
                 bandwidths(count) = max(vocs{count}) - min(vocs{count});
                 meanValues(count) = trapz(times{count},vocs{count})/durations(count);
-                isSolo(count) = isSoloFile(i);
+                isSolo(count) = isSoloFile(i); 
                 
                 idx = find([1 diff(times{count})]~=0);
                 x = vocs{count}(idx) - meanValues(count);
                 t = times{count}(idx);
+                
                 normalizedVocs{count} = interp1(t,x,linspace(t(1),t(end),numPoints));
                 
                 count = count + 1;
@@ -117,6 +129,7 @@ function vocData = loadMouseData(files,isSoloFile,parameters)
     vocData.normalizedVocs = cell2mat(normalizedVocs);
     vocData.numPoints = numPoints;
     vocData.isSolo = isSolo;
+    vocData.inTrainingSet=true(size(isSolo)); % added by RE, eventually be able to select a subbset of a large dataset for training
     
     
     
