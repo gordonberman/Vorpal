@@ -28,7 +28,7 @@ function outputStats = makeOutputPlots(vocData,parameters)
     fprintf(1,'Calculating Densities\n');
     yData = vocData.yData;
     sigma = parameters.sigma;
-    numPoints = parameters.numPoints;
+    numPoints = parameters.numPoints_density;
     maxVal = ceil(3*sigma + max(abs(yData(:)))/5)*5;
     [xx,density] = findPointDensity(yData,sigma,numPoints,[-maxVal maxVal]);
     

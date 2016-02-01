@@ -90,7 +90,7 @@ function vocData = loadMouseData(files,isSoloFile,parameters)
         for j=1:lengths(i)
                        
             for k=1:length(data{i}(j).vocs);
-                
+                              
                 times{count} = data{i}(j).vocs{k}(1,:);
                 vocs{count} = data{i}(j).vocs{k}(2,:);
                 amps{count} = data{i}(j).vocs{k}(3,:);
@@ -98,17 +98,18 @@ function vocData = loadMouseData(files,isSoloFile,parameters)
                 exptNames{count} = experimentNames{i}{j};
                 indNames{count} = individualNames{i}{j};
                 
+                idx2 = ~isnan(vocs{count}) & ~isinf(vocs{count}); 
                 durations(count) = max(times{count}) - min(times{count});
-                bandwidths(count) = max(vocs{count}) - min(vocs{count});
-                meanValues(count) = trapz(times{count},vocs{count})/durations(count);
+                bandwidths(count) = max(vocs{count}(idx2)) - min(vocs{count}(idx2));
+                meanValues(count) = trapz(times{count}(idx2),vocs{count}(idx2))/durations(count);
                 isSolo(count) = isSoloFile(i); 
                 
-                idx = find([1 diff(times{count})]~=0);
+                idx = find([1 diff(times{count})]~=0 & idx2);
                 x = vocs{count}(idx) - meanValues(count);
                 t = times{count}(idx);
                 
                 normalizedVocs{count} = interp1(t,x,linspace(t(1),t(end),numPoints));
-                
+                               
                 count = count + 1;
             end
             

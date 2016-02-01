@@ -127,7 +127,7 @@ function parameters = setRunParameters(parameters)
      template_yaxis = [-20 20];
     
      %number of points in each dimension of density matrix
-     numPoints = 201;
+     numPoints_density = 201;
     
      %statistical significance p-Value threshold
      sigAlpha = .05;
@@ -279,7 +279,9 @@ function parameters = setRunParameters(parameters)
     
     
     
-    
+    if ~isfield(parameters,'numPoints_density') || isempty(parameters.numPoints_density)
+        parameters.numPoints_density = numPoints_density;
+    end
     
     if ~isfield(parameters,'sigma') || isempty(parameters.sigma)
         parameters.sigma = sigma;
