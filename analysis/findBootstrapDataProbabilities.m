@@ -1,4 +1,4 @@
-function probs = findBootstrapDataProbabilities(densities1,densities2,useDensity)
+function probs = findBootstrapDataProbabilities(densities1,densities2,useDensity,parameters)
 %determines bootstrap probabilities that densities1 > densities2 at each position in the space
 %
 %Inputs:
@@ -19,12 +19,20 @@ function probs = findBootstrapDataProbabilities(densities1,densities2,useDensity
 
 
     s = size(densities1);
-    maxGMM = 3;
-    numReplicates = 3;
-    maxNum = 10000;
-    numDensityPoints = 1000;
-    rangeExtension = .1;
+    
+    if nargin < 4
+        parameters = [];
+    end
+    
+    parameters = setRunParameters(parameters);
+
+    maxGMM = parameters.maxGMM;
+    numReplicates = parameters.numReplicates;
+    maxNum = parameters.maxNumSamples;
+    numDensityPoints = parameters.numDensityPoints;
+    rangeExtension = parameters.rangeExtension;
     readout = 1;
+    
     
     probs = zeros(s(1:2));
     for ii=1:s(1);

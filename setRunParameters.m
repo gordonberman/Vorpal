@@ -134,8 +134,24 @@ function parameters = setRunParameters(parameters)
      sigAlpha = .05;
     
     
-    
-    
+     
+      %%%%%%%% Bootstrap Parameters %%%%%%%%
+     
+     %smoothing window for t-SNE plots
+     maxGMM = 3;
+     
+     %template plot dimensions (i.e. subplot(x1,x2,..))
+     numReplicates = 3;
+     
+     %minimum allowed density in plots
+     maxNumSamples = 10000;
+     
+     %template plot caxis
+     numDensityPoints = 1000;
+     
+     %template bins
+     rangeExtension = .1;
+     
     
     
     
@@ -322,5 +338,28 @@ function parameters = setRunParameters(parameters)
     if ~isfield(parameters,'template_bins') || isempty(parameters.template_bins)
         parameters.template_bins = template_bins;
     end
+    
+    
+    
+    if ~isfield(parameters,'maxGMM') || isempty(parameters.maxGMM)
+        parameters.maxGMM = maxGMM;
+    end
+    
+    if ~isfield(parameters,'numReplicates') || isempty(parameters.numReplicates)
+        parameters.numReplicates = numReplicates;
+    end
+    
+    if ~isfield(parameters,'maxNumSamples') || isempty(parameters.maxNumSamples)
+        parameters.maxNumSamples = maxNumSamples;
+    end
+    
+    if ~isfield(parameters,'numDensityPoints') || isempty(parameters.numDensityPoints)
+        parameters.numDensityPoints = numDensityPoints;
+    end
+    
+    if ~isfield(parameters,'rangeExtension') || isempty(parameters.rangeExtension)
+        parameters.rangeExtension = rangeExtension;
+    end
+    
     
     
