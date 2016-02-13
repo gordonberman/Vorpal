@@ -20,8 +20,8 @@ function vocData = loadMouseData(files,isSoloFile,parameters)
 %                       row 3 is amplitude.  Frequency contours like this
 %                       are produced by Ax (https://github.com/JaneliaSciComp/Ax)
 % 
-% (C) Gordon J. Berman, 2015
-%     Princeton University
+% (C) Gordon J. Berman, 2016
+%     Emory University
 
     addpath('./utilities');
 

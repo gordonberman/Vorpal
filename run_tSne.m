@@ -15,8 +15,9 @@ function [yData,betas,P,errors] = run_tSne(D,parameters)
 %       errors -> P.*log2(P./Q) as a function of t-SNE iteration
 %
 %
-% (C) Gordon J. Berman, 2015
-%     Princeton University
+% (C) Gordon J. Berman, 2016
+%     Emory University
+
 
 
     addpath(genpath('./utilities/'));

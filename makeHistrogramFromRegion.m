@@ -1,4 +1,7 @@
 function [Z,x,y,points] = makeHistrogramFromRegion(vocData,plotOutputData,mapData)
+% (C) Gordon J. Berman, 2016
+%     Emory University
+
 
     maxX = 1000;
     x = zeros(maxX,1);

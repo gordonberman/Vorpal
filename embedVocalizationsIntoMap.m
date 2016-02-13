@@ -1,6 +1,8 @@
 function [zValues,inConvHull,zGuesses,zCosts] = ...
        embedVocalizationsIntoMap(newVocs,yData,signalData,parameters)
-            
+% (C) Gordon J. Berman, 2016
+%     Emory University
+        
 
     addpath('utilities/');
     addpath('t_sne/');

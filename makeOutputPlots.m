@@ -2,8 +2,8 @@ function outputStats = makeOutputPlots(vocData,parameters)
 %Makes output plots from vocData structure
 %
 %
-% (C) Gordon J. Berman, 2015
-%     Princeton University
+% (C) Gordon J. Berman, 2016
+%     Emory University
 
 
     addpath('utilities');

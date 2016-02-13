@@ -15,6 +15,7 @@ function expt_freq_contours=make_mouse_data_files(output_filename,varargin)
 %
 % each file should be only one format (isSolo==1 or 0)
 
+
 if isempty(varargin)==1
     a=dir;
     b=extract_struct_field(a,'name','.fc');

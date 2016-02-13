@@ -7,8 +7,9 @@ function makeMapFromArray(plotOutputData,toPlotArray)
 %                  value within region is used
 %
 %
-% (C) Gordon J. Berman, 2015
-%     Princeton University
+% (C) Gordon J. Berman, 2016
+%     Emory University
+
 
 
 

@@ -2,8 +2,9 @@ function D = find_distance_matrix(vocalizations,parameters)
 %finds distance matrix for an N x d matrix of vocalizations using dynamic
 %time warping
 %
-% (C) Gordon J. Berman, 2015
-%     Princeton University
+% (C) Gordon J. Berman, 2016
+%     Emory University
+
 
     if nargin < 2
         parameters = [];

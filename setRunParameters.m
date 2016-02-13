@@ -4,8 +4,9 @@ function parameters = setRunParameters(parameters)
 %       default values.
 %
 %
-% (C) Gordon J. Berman, 2015
-%     Princeton University
+% (C) Gordon J. Berman, 2016
+%     Emory University
+
 
 
     if nargin < 1
