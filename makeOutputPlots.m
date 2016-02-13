@@ -1,4 +1,4 @@
-function outputStats = makeOutputPlots(vocData,parameters)
+function outputStats = makeOutputPlots(vocData,parameters,runBootstrap)
 %Makes output plots from vocData structure
 %
 %
@@ -20,6 +20,11 @@ function outputStats = makeOutputPlots(vocData,parameters)
         %             p.(a{i}) = parameters.(a{i});
         %         end
         parameters = setRunParameters(parameters);
+    end
+    
+    
+    if nargin < 3 || isempty(runBootstrap)
+        runBootstrap = false;
     end
     
     
@@ -239,11 +244,51 @@ function outputStats = makeOutputPlots(vocData,parameters)
     a = vocData.inTrainingSet;
     plotTemplateHistograms(vocData.normalizedVocs(a,:),watershedRegions(a),bins,...
         yrange,templatePlotDimensions,colorAxis);
-    
+    drawnow
     
     outputStats.watershedRegions = watershedRegions;
+   
     
-    
+    if runBootstrap
+        
+        numBootstraps = parameters.numBootstrap;
+        xx_boot = linspace(xx(1),xx(end),parameters.numPoints_boot);
+        
+        [probs,densities1,densities2] = ...
+            runPairwiseBootstrap(yData,isSolo,numBootstraps,...
+                           xx_boot,sigma,parameters.minDensity,parameters);
+        
+        regions_boot = bwlabel(min(probs,1-probs) < alpha);               
+                       
+        outputStats.probs_bootstrap = probs;
+        outputStats.significance_probs_bootstrap = min(probs,1-probs);
+        outputStats.bootstrap_densities_urine = densities1;
+        outputStats.bootstrap_densities_female = densities2;
+        outputStats.regions_boot = regions_boot;
+        
+        figure
+        imagesc(xx_boot,xx_boot, outputStats.mean_female_density - outputStats.mean_urine_density)
+        axis equal tight off xy
+        colormap(cc2)
+        caxis([-maxDensity maxDensity]);
+        colorbar
+        hold on
+        plot(xx(B{1}(:,2)),xx(B{1}(:,1)),'k-','linewidth',3);
+        
+        if sum(regions_boot(:)) > 0
+            for i=1:max(regions_boot(:))
+                BB = bwboundaries(regions_boot == i);
+                if ~isempty(BB)
+                    plot(xx_boot(BB{1}(:,2)),xx_boot(BB{1}(:,1)),'k-','linewidth',2)
+                end
+            end
+        end
+        set(gca,'fontsize',14,'fontweight','bold')
+        title('Difference','fontsize',16,'fontweight','bold')
+        freezeColors
+        drawnow
+        
+    end
     
     
     

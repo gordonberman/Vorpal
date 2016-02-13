@@ -152,8 +152,11 @@ function parameters = setRunParameters(parameters)
      %template bins
      rangeExtension = .1;
      
+     %number of bootstrap samples
+     numBootstrap = 1000;
     
-    
+     %number of points in the bootstrapped space
+     numPoints_boot = 101;
     
     
     
@@ -361,5 +364,12 @@ function parameters = setRunParameters(parameters)
         parameters.rangeExtension = rangeExtension;
     end
     
+    if ~isfield(parameters,'numBootstrap') || isempty(parameters.numBootstrap)
+        parameters.numBootstrap = numBootstrap;
+    end
+    
+    if ~isfield(parameters,'numPoints_boot') || isempty(parameters.numPoints_boot)
+        parameters.numPoints_boot = numPoints_boot;
+    end
     
     

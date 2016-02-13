@@ -1,5 +1,10 @@
 function [probs,densities1,densities2] = ...
-    runPairwiseBootstrap(zValues,indicator,numBootstraps,xx,sigma,minDensity)
+    runPairwiseBootstrap(zValues,indicator,numBootstraps,xx,sigma,minDensity,parameters)
+
+    if nargin < 7
+        parameters = [];
+    end
+    parameters = setRunParameters(parameters);
 
 
     fprintf(1,'\t Calculating Bootstrap Densities #1\n');
@@ -7,7 +12,7 @@ function [probs,densities1,densities2] = ...
     fprintf(1,'\t Calculating Bootstrap Densities #2\n');
     densities2 = findBootstrappedDensities(zValues(~indicator,:),xx,sigma,numBootstraps);
     
-    useDensity = .5*mean(densities1,3) + .5*mean(densities2) > minDensity;
+    useDensity = .5*mean(densities1,3) + .5*mean(densities2,3) > minDensity;
     
     fprintf(1,'\t Calculating Bootstrap Probabilities\n');
-    probs = findBootstrapDataProbabilities(densities1,densities2,useDensity);
+    probs = findBootstrapDataProbabilities(densities1,densities2,useDensity,parameters);
