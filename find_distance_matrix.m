@@ -15,6 +15,7 @@ function D = find_distance_matrix(vocalizations,parameters)
     
     N = length(vocalizations(:,1));
     
+    cellData = iscell(vocalizations);
     D = zeros(N);
     for i=1:N
         
@@ -23,13 +24,22 @@ function D = find_distance_matrix(vocalizations,parameters)
         end
         
         temp = zeros(1,N);
-        a = vocalizations(i,:);
+        if ~cellData
+            a = vocalizations(i,:);
+        else
+            a = vocalizations{i};
+        end
         
         parfor j=(i+1):N
-            if ~isempty(dtw_window)
-                temp(j) = dtw_c(a,vocalizations(j,:),dtw_window);
+            if ~cellData
+                b = vocalizations(j,:);
             else
-                temp(j) = dtw_c(a,vocalizations(j,:));
+                b = vocalizations{j};
+            end
+            if ~isempty(dtw_window)
+                temp(j) = dtw_c(a,b,dtw_window);
+            else
+                temp(j) = dtw_c(a,b);
             end
         end
         

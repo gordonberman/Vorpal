@@ -35,7 +35,7 @@ function probs = findBootstrapDataProbabilities(densities1,densities2,useDensity
     
     
     probs = zeros(s(1:2));
-    for ii=1:s(1);
+    for ii=1:s(1)
         if mod(ii,readout) == 0
             fprintf(1,'Processing Line #%4i out of %4i\n',ii,s(1));
         end
@@ -65,3 +65,4 @@ function probs = findBootstrapDataProbabilities(densities1,densities2,useDensity
         end
         probs(ii,:) = temp;
     end
+    
