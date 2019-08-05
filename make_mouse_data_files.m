@@ -22,8 +22,8 @@ if isempty(varargin)==1
     fc_filenames=cell(length(b),1);
     for i=1:length(b)
         fc_filenames{i}=b(i).name;
-    end;
-end;  
+    end
+end
 
 [expt_freq_contours(1:length(fc_filenames)).exptName]=deal([]);
 
@@ -40,14 +40,14 @@ for i=1:length(fc_filenames)
         expt_freq_contours(i).vocs=[freq_contours{:}];  
     else
         disp('this is not an .fc file');
-    end;
+    end
 
     for j=1:length(expt_freq_contours(i).vocs)
         expt_freq_contours(i).vocs{j}=expt_freq_contours(i).vocs{j}'/1000; % rotate and switch to kHz from Hz
-    end;
+    end
 
     clear freq_contours; clear new_freq_contours;
-end;
+end
 
 
 save(output_filename,'expt_freq_contours');
@@ -63,9 +63,9 @@ for i=1:length(struct_variable)
     if isempty(strfind(cur_field,field_value))==0
         out(j,1).name=cur_field;
         j=j+1;
-    end;
-end;
+    end
+end
 
 if exist('out')==0
     out.name='no values';
-end;
+end

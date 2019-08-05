@@ -39,6 +39,7 @@ function vocData = loadMouseData(files,isSoloFile,parameters)
     experimentNames = cell(L,1);
     individualNames = cell(L,1);
     numVocs = zeros(L,1);
+    min_voc_length = parameters.min_voc_length;
     
     fprintf(1,'Initializing\n');
     for i=1:L
@@ -88,50 +89,53 @@ function vocData = loadMouseData(files,isSoloFile,parameters)
         fprintf(1,'Loading Vocalizations from File #%3i out of %3i\n',i,L);
         
         for j=1:lengths(i)
-                       
-            for k=1:length(data{i}(j).vocs);
-                              
-                times{count} = data{i}(j).vocs{k}(1,:);
-                vocs{count} = data{i}(j).vocs{k}(2,:);
-                amps{count} = data{i}(j).vocs{k}(3,:);
+            
+            for k=1:length(data{i}(j).vocs)
                 
-                exptNames{count} = experimentNames{i}{j};
-                indNames{count} = individualNames{i}{j};
-                
-                idx2 = ~isnan(vocs{count}) & ~isinf(vocs{count}); 
-                durations(count) = max(times{count}) - min(times{count});
-                bandwidths(count) = max(vocs{count}(idx2)) - min(vocs{count}(idx2));
-                meanValues(count) = trapz(times{count}(idx2),vocs{count}(idx2))/durations(count);
-                isSolo(count) = isSoloFile(i); 
-                
-                idx = find([1 diff(times{count})]~=0 & idx2);
-                x = vocs{count}(idx) - meanValues(count);
-                t = times{count}(idx);
-                
-                normalizedVocs{count} = interp1(t,x,linspace(t(1),t(end),numPoints));
-                               
-                count = count + 1;
+                if length(data{i}(j).vocs{k}(1,:)) >= min_voc_length
+                    
+                    times{count} = data{i}(j).vocs{k}(1,:);
+                    vocs{count} = data{i}(j).vocs{k}(2,:);
+                    amps{count} = data{i}(j).vocs{k}(3,:);
+                    
+                    exptNames{count} = experimentNames{i}{j};
+                    indNames{count} = individualNames{i}{j};
+                    
+                    idx2 = ~isnan(vocs{count}) & ~isinf(vocs{count});
+                    durations(count) = max(times{count}) - min(times{count});
+                    bandwidths(count) = max(vocs{count}(idx2)) - min(vocs{count}(idx2));
+                    meanValues(count) = trapz(times{count}(idx2),vocs{count}(idx2))/durations(count);
+                    isSolo(count) = isSoloFile(i);
+                    
+                    idx = find([1 diff(times{count})]~=0 & idx2);
+                    x = vocs{count}(idx) - meanValues(count);
+                    t = times{count}(idx);
+                    
+                    normalizedVocs{count} = interp1(t,x,linspace(t(1),t(end),numPoints));
+                    
+                    count = count + 1;
+                end
             end
             
         end
         
     end
     
-
+    idx = returnCellLengths(vocs) > 0;
     
-    [vocData.experimentNames,~,vocData.experimentNumbers] = unique(exptNames);
-    [vocData.individualNames,~,vocData.individualNumbers] = unique(indNames);
-    vocData.times = times;
-    vocData.vocs = vocs;
-    vocData.amps = amps;
-    vocData.durations = durations;
-    vocData.bandwidths = bandwidths;
-    vocData.meanValues = meanValues;
-    vocData.normalizedVocs = cell2mat(normalizedVocs);
+    [vocData.experimentNames,~,vocData.experimentNumbers] = unique(exptNames(idx));
+    [vocData.individualNames,~,vocData.individualNumbers] = unique(indNames(idx));
+    vocData.times = times(idx);
+    vocData.vocs = vocs(idx);
+    vocData.amps = amps(idx);
+    vocData.durations = durations(idx);
+    vocData.bandwidths = bandwidths(idx);
+    vocData.meanValues = meanValues(idx);
+    vocData.normalizedVocs = cell2mat(normalizedVocs(idx,:));
     vocData.numPoints = numPoints;
-    vocData.isSolo = isSolo;
-    vocData.inTrainingSet=true(size(isSolo)); % added by RE, eventually be able to select a subbset of a large dataset for training
-    
+    vocData.isSolo = isSolo(idx);
+    vocData.inTrainingSet=true(size(vocData.isSolo)); % added by RE, eventually be able to select a subbset of a large dataset for training
+    vocData.numVocs = sum(idx);
     
     
     

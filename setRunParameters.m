@@ -29,6 +29,8 @@ function parameters = setRunParameters(parameters)
     %window parameter for dtw
     dtw_window = [];
     
+    %minimum length for vocalization
+    min_voc_length = 5;
     
     
     
@@ -181,9 +183,9 @@ function parameters = setRunParameters(parameters)
         parameters.dtw_window = dtw_window;
     end
     
-    
-    
-
+    if ~isfield(parameters,'min_voc_length') || isempty(parameters.min_voc_length)
+        parameters.min_voc_length = min_voc_length;
+    end
     
     if ~isfield(parameters,'perplexity') || isempty(parameters.perplexity)
         parameters.perplexity = perplexity;
